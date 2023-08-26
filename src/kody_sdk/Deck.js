@@ -30,10 +30,10 @@ export default class Deck {
     this.mesh.position.x = this.width / 2;
     this.mesh.position.y = this.height / 2;
     this.mesh.position.z = this.depth / 2;
+    this.mesh.material = this.material;
   }
 
   position() {
-    this.mesh.material = this.material;
     this.mesh.translate(BabylonAxis.X, -this.width / 2);
     this.mesh.translate(BabylonAxis.Y, -this.height / 2);
   }

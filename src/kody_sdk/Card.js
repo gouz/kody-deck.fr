@@ -6,7 +6,7 @@ import {
 } from "babylonjs";
 import { MeshWriter } from "meshwriter";
 import { config } from "./config.json";
-import { addItem, makeHole } from "./utils";
+import { addItem, makeHole, removeItem } from "./utils";
 
 export default class Card {
   constructor(name, code, color, pos) {
@@ -108,35 +108,36 @@ export default class Card {
   }
 
   codeHoles() {
-    let y =
-      config.bracket.size +
-      config.text.block.size +
-      config.code.nb.y * config.code.hole.size +
-      config.code.nb.y -
-      config.text.block.size;
+    let y = 0;
+    let codeMesh = BabylonMeshBuilder.CreateBox("chole");
+    let maxX = 0;
     this.code.forEach((line) => {
       let cols = line.split("");
-      let x =
-        (config.card.width -
-          (config.code.nb.x * config.code.hole.size +
-            config.code.nb.x -
-            config.text.block.size)) /
-        2;
+      let x = 0;
       for (let b of cols) {
         if (b == " ")
-          this.mesh = makeHole(
-            this.mesh,
+          codeMesh = addItem(
+            codeMesh,
+            BabylonMeshBuilder.CreateBox("hole", {
+              width: config.code.hole.size,
+              height: config.code.hole.size,
+              depth: config.card.depth,
+            }),
             x,
             y,
-            0,
-            config.code.hole.size,
-            config.code.hole.size,
-            config.card.depth
+            0
           );
         x += config.code.hole.size + config.text.block.size;
+        if (maxX < x) maxX = x;
       }
       y -= config.code.hole.size + config.text.block.size;
     });
+
+    codeMesh.position.x = (config.card.width - maxX + config.bracket.size) / 2;
+    codeMesh.position.y = (config.card.height - y) / 2 - config.bracket.size;
+    codeMesh.position.z = config.card.depth / 2;
+
+    this.mesh = removeItem(this.mesh, codeMesh);
   }
 
   kodyText() {

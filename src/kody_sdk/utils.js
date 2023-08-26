@@ -9,7 +9,7 @@ const _merge = (mesh1, mesh2, type) => {
   let pipeCSG;
   if ("sub" == type) pipeCSG = CSG1.subtract(CSG2);
   else if ("add" == type) pipeCSG = CSG1.union(CSG2);
-  const mesh = pipeCSG.toMesh("card", null, window.kody.scene);
+  const mesh = pipeCSG.toMesh("merged", mesh1.material, window.kody.scene);
   mesh1.dispose();
   mesh2.dispose();
   window.kody.scene.removeMesh(mesh1);
@@ -34,4 +34,8 @@ export const addItem = (mesh, item, x, y, z) => {
   item.position.y += y;
   item.position.z += z;
   return _merge(mesh, item, "add");
+};
+
+export const removeItem = (mesh, item) => {
+  return _merge(mesh, item, "sub");
 };

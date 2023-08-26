@@ -16,7 +16,7 @@ window.kody.launch = () => {
   window.kody.scene = new Scene("canvas");
 
   // add DeckBack
-  new DeckBack(8, "#CCCCCC").render();
+  // new DeckBack(8, "#CCCCCC").render();
   // add DeckFront
   // new DeckFront(8, "#CCCCCC", "gouz").render();
   new Card(
