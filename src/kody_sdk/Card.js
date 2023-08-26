@@ -42,6 +42,7 @@ export default class Card {
     this.cardText();
     this.kodyText();
     this.position();
+    return this.mesh;
   }
 
   generateBase() {
@@ -109,7 +110,9 @@ export default class Card {
 
   codeHoles() {
     let y = 0;
-    let codeMesh = BabylonMeshBuilder.CreateBox("chole");
+    let codeMesh = BabylonMeshBuilder.CreateBox("chole", {
+      width: 0.01,
+    });
     let maxX = 0;
     this.code.forEach((line) => {
       let cols = line.split("");

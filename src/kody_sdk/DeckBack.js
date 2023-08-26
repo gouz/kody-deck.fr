@@ -71,6 +71,7 @@ export default class DeckBack extends Deck {
         config.text.block.size * 3
     );
     this.position();
+    return this.mesh;
   }
 
   mainHole() {

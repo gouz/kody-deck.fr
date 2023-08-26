@@ -18,6 +18,7 @@ export default class DeckFront extends Deck {
     this.codeHole();
     this.kodyHole();
     this.position();
+    return this.mesh;
   }
 
   mainHole() {
