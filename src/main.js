@@ -1,3 +1,4 @@
+import Card from "./kody_sdk/Card";
 import DeckBack from "./kody_sdk/DeckBack";
 import DeckFront from "./kody_sdk/DeckFront";
 import Scene from "./kody_sdk/Scene";
@@ -17,7 +18,24 @@ window.kody.launch = () => {
   // add DeckBack
   new DeckBack(8, "#CCCCCC").render();
   // add DeckFront
-  new DeckFront(8, "#CCCCCC", "gouz").render();
+  // new DeckFront(8, "#CCCCCC", "gouz").render();
+  new Card(
+    "Pirate",
+    [
+      "          ",
+      "          ",
+      "          ",
+      "          ",
+      " X      X ",
+      " X      X ",
+      "          ",
+      "          ",
+      "          ",
+      "          ",
+    ],
+    "#ff7a42",
+    0
+  ).render();
 };
 
 window.kody.launch();

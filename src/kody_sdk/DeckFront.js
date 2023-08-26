@@ -88,7 +88,7 @@ export default class DeckFront extends Deck {
     // @TODO =>
     /*
     // text
-    const Writer = MeshWriter(window.kody.scene);
+    const Writer = MeshWriter(window.kody.scene, { scale: 1 });
     const text = new Writer(this.name.replace("_", " "), {
       "letter-height": 6,
       "letter-thickness": config.deck.thickness / 2,
