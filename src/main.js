@@ -96,6 +96,52 @@ window.kody.download = (deckname, name) => {
   a.click();
 };
 
+const svgGenerate = `<svg
+width="24"
+height="24"
+viewBox="0 0 24 24"
+fill="none"
+xmlns="http://www.w3.org/2000/svg"
+>
+<path
+  d="M9 12H12M15 12H12M12 12V9M12 12V15"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+/>
+<path
+  d="M11.7 1.1732C11.8856 1.06603 12.1144 1.06603 12.3 1.17321L21.2263 6.3268C21.4119 6.43397 21.5263 6.63205 21.5263 6.84641V17.1536C21.5263 17.3679 21.4119 17.566 21.2263 17.6732L12.3 22.8268C12.1144 22.934 11.8856 22.934 11.7 22.8268L2.77372 17.6732C2.58808 17.566 2.47372 17.3679 2.47372 17.1536V6.84641C2.47372 6.63205 2.58808 6.43397 2.77372 6.32679L11.7 1.1732Z"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+/>
+</svg>`;
+
+const svgDownload = `<svg
+width="24"
+height="24"
+viewBox="0 0 24 24"
+fill="none"
+xmlns="http://www.w3.org/2000/svg"
+>
+<path
+  d="M6 20L18 20"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+/>
+<path
+  d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+/>
+</svg>`;
+
 window.kody.launch = () => {
   prepareApp();
   window.kody.scene = new Scene(canvasID);
@@ -114,10 +160,10 @@ window.kody.launch = () => {
               <h3>Deck Back</h3>
               <button onclick="window.kody.generateBack('${deck.name}', ${
           deck.cards.length
-        })">Generate</button>
+        })">${svgGenerate}</button>
               <button onclick="window.kody.download('${
                 deck.name
-              }', '__BACK__')">Download</button>
+              }', '__BACK__')">${svgDownload}</button>
             </li>
             ${Object.values(deck.cards)
               .map((card, i) => {
@@ -125,8 +171,8 @@ window.kody.launch = () => {
                 return `
                   <li>
                     <h3>${card.name}</h3>
-                    <button onclick="window.kody.generateCard('${deck.name}', '${card.name}', '${card.color}', ${i})">Generate</button>
-                    <button onclick="window.kody.download('${deck.name}', '${card.name}')">Download</button>
+                    <button onclick="window.kody.generateCard('${deck.name}', '${card.name}', '${card.color}', ${i})">${svgGenerate}</button>
+                    <button onclick="window.kody.download('${deck.name}', '${card.name}')">${svgDownload}</button>
                   </li>
                   `;
               })
@@ -135,10 +181,10 @@ window.kody.launch = () => {
               <h3>Deck Front</h3>
               <button onclick="window.kody.generateFront('${deck.name}', ${
           deck.cards.length
-        })">Generate</button>
+        })">${svgGenerate}</button>
               <button onclick="window.kody.download('${
                 deck.name
-              }', '__FRONT__')">Download</button>
+              }', '__FRONT__')">${svgDownload}</button>
             </li>
           </ul>
         </div>
