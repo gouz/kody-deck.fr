@@ -72,19 +72,40 @@ h1 {
 
 button {
   background-color: #213547;
-  padding: 10px 20px;
+  padding: 5px;
   border-radius: 10px;
+}
+
+button svg {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 #decks {
   overflow: scroll;
   height: 100%;
+  width: 300px;
 }
 
 #decks ul {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+#decks h2,
+h3 {
+  margin: 0;
+}
+
+#decks ul li {
+  display: flex;
+  padding: 0 0.5rem;
+}
+
+#decks ul li h3 {
+  flex-grow: 1;
+  text-align: left;
 }
 
 @media (prefers-color-scheme: light) {

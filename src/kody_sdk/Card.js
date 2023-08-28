@@ -187,7 +187,7 @@ export default class Card {
     const textarea_height = config.bracket.size * 2;
     const Writer = MeshWriter(window.kody.scene, { scale: 1 });
     const text = new Writer(this.name.replace(/_/g, " "), {
-      "letter-height": 5,
+      "letter-height": 9,
       "letter-thickness": config.card.depth / 2,
       "font-family": "comic",
     });

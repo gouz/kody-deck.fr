@@ -1,30 +1,40 @@
-import {
-  VertexBuffer as BabylonVertexBuffer,
-  Vector3 as BabylonVector3,
-} from "babylonjs";
-
 import Card from "./kody_sdk/Card";
 import DeckBack from "./kody_sdk/DeckBack";
 import DeckFront from "./kody_sdk/DeckFront";
 import Scene from "./kody_sdk/Scene";
 import "./style.css";
+import { CreateSTL } from "./kody_sdk/utils";
 
 const canvasID = "scene";
 
 window.kody = {
   codes: {},
   meshes: {},
-  generateBack: (deckname, nbCards) =>
-    (window.kody.meshes[`${deckname}____BACK__`] = new DeckBack(
+  generateBack: (deckname, nbCards) => {
+    window.kody.meshes[`${deckname}____BACK__`] = new DeckBack(
       nbCards,
       "#CCCCCC"
-    ).render()),
-  generateFront: (deckname, nbCards) =>
-    (window.kody.meshes[`${deckname}____FRONT__`] = new DeckFront(
+    ).render();
+    document.getElementById(`${deckname}___BACK___generate`).style.display =
+      "none";
+    document.getElementById(`${deckname}___BACK___hide`).style.display =
+      "inline";
+    document.getElementById(`${deckname}___BACK___download`).style.display =
+      "inline";
+  },
+  generateFront: (deckname, nbCards) => {
+    window.kody.meshes[`${deckname}____FRONT__`] = new DeckFront(
       nbCards,
       "#CCCCCC",
       deckname
-    ).render()),
+    ).render();
+    document.getElementById(`${deckname}___FRONT___generate`).style.display =
+      "none";
+    document.getElementById(`${deckname}___FRONT___hide`).style.display =
+      "inline";
+    document.getElementById(`${deckname}___FRONT___download`).style.display =
+      "inline";
+  },
   generateCard: (deckname, cardname, color, pos) => {
     window.kody.meshes[`${deckname}__${cardname}`] = new Card(
       cardname,
@@ -32,8 +42,25 @@ window.kody = {
       color,
       pos
     ).render();
+    document.getElementById(`${deckname}_${cardname}_generate`).style.display =
+      "none";
+    document.getElementById(`${deckname}_${cardname}_hide`).style.display =
+      "inline";
+    document.getElementById(`${deckname}_${cardname}_download`).style.display =
+      "inline";
   },
   download: (deckname, name) => {
+    let exportFile = CreateSTL(
+      window.kody.meshes[`${deckname}__${name}`],
+      true,
+      `${deckname}__${name}`,
+      false,
+      false,
+      false,
+      true,
+      true
+    );
+    /*
     let output = "solid exportedMesh\r\n";
     const vertices = window.kody.meshes[`${deckname}__${name}`].getVerticesData(
       BabylonVertexBuffer.PositionKind
@@ -76,11 +103,20 @@ window.kody = {
     a.href = window.URL.createObjectURL(blob);
     a.download = `${deckname}__${name}.stl`;
     a.click();
+    */
   },
-  show: (deckname, name) =>
-    window.kody.meshes[`${deckname}__${name}`].setEnabled(true),
-  hide: (deckname, name) =>
-    window.kody.meshes[`${deckname}__${name}`].setEnabled(false),
+  show: (deckname, name) => {
+    window.kody.meshes[`${deckname}__${name}`].setEnabled(true);
+    document.getElementById(`${deckname}_${name}_show`).style.display = "none";
+    document.getElementById(`${deckname}_${name}_hide`).style.display =
+      "inline";
+  },
+  hide: (deckname, name) => {
+    window.kody.meshes[`${deckname}__${name}`].setEnabled(false);
+    document.getElementById(`${deckname}_${name}_show`).style.display =
+      "inline";
+    document.getElementById(`${deckname}_${name}_hide`).style.display = "none";
+  },
 };
 
 const prepareApp = () => {
@@ -132,18 +168,26 @@ window.kody.launch = () => {
           <ul>
             <li>
               <h3>Deck Back</h3>
-              <button onclick="window.kody.generateBack('${deck.name}', ${
-          deck.cards.length
-        })">${svgGenerate}</button>
-              <button onclick="window.kody.show('${
+              <button id="${
                 deck.name
-              }', '__BACK__')">${svgShow}</button>
-              <button onclick="window.kody.hide('${
+              }___BACK___generate" onclick="window.kody.generateBack('${
+          deck.name
+        }', ${deck.cards.length})">${svgGenerate}</button>
+              <button id="${
                 deck.name
-              }', '__BACK__')">${svgHide}</button>
-              <button onclick="window.kody.download('${
+              }___BACK___show" onclick="window.kody.show('${
+          deck.name
+        }', '__BACK__')" style="display: none;">${svgShow}</button>
+              <button id="${
                 deck.name
-              }', '__BACK__')">${svgDownload}</button>
+              }___BACK___hide" onclick="window.kody.hide('${
+          deck.name
+        }', '__BACK__')" style="display: none;">${svgHide}</button>
+              <button id="${
+                deck.name
+              }___BACK___download" onclick="window.kody.download('${
+          deck.name
+        }', '__BACK__')" style="display: none;">${svgDownload}</button>
             </li>
             ${Object.values(deck.cards)
               .map((card, i) => {
@@ -151,33 +195,46 @@ window.kody.launch = () => {
                 return `
                   <li>
                     <h3>${card.name}</h3>
-                    <button onclick="window.kody.generateCard('${deck.name}', '${card.name}', '${card.color}', ${i})">${svgGenerate}</button>
-                    <button onclick="window.kody.show('${deck.name}', '${card.name}')">${svgShow}</button>
-                    <button onclick="window.kody.hide('${deck.name}', '${card.name}')">${svgHide}</button>
-                    <button onclick="window.kody.download('${deck.name}', '${card.name}')">${svgDownload}</button>
+                    <button id="${deck.name}_${card.name}_generate" onclick="window.kody.generateCard('${deck.name}', '${card.name}', '${card.color}', ${i})">${svgGenerate}</button>
+                    <button id="${deck.name}_${card.name}_show" onclick="window.kody.show('${deck.name}', '${card.name}')" style="display: none;">${svgShow}</button>
+                    <button id="${deck.name}_${card.name}_hide" onclick="window.kody.hide('${deck.name}', '${card.name}')" style="display: none;">${svgHide}</button>
+                    <button id="${deck.name}_${card.name}_download" onclick="window.kody.download('${deck.name}', '${card.name}')" style="display: none;">${svgDownload}</button>
                   </li>
                   `;
               })
               .join("")}
               <li>
               <h3>Deck Front</h3>
-              <button onclick="window.kody.generateFront('${deck.name}', ${
-          deck.cards.length
-        })">${svgGenerate}</button>
-              <button onclick="window.kody.show('${
+              <button id="${
                 deck.name
-              }', '__FRONT__')">${svgShow}</button>
-              <button onclick="window.kody.hide('${
+              }___FRONT___generate" onclick="window.kody.generateFront('${
+          deck.name
+        }', ${deck.cards.length})">${svgGenerate}</button>
+              <button id="${
                 deck.name
-              }', '__FRONT__')">${svgHide}</button>
-              <button onclick="window.kody.download('${
+              }___FRONT___show" onclick="window.kody.show('${
+          deck.name
+        }', '__FRONT__')" style="display: none;">${svgShow}</button>
+              <button id="${
                 deck.name
-              }', '__FRONT__')">${svgDownload}</button>
+              }___FRONT___hide" onclick="window.kody.hide('${
+          deck.name
+        }', '__FRONT__')" style="display: none;">${svgHide}</button>
+              <button id="${
+                deck.name
+              }___FRONT___download" onclick="window.kody.download('${
+          deck.name
+        }', '__FRONT__')" style="display: none;">${svgDownload}</button>
             </li>
           </ul>
         </div>
         `);
       });
       window.kody.$decks.innerHTML = decklist.join("");
+      // remove
+      window.kody.generateBack("Demo", 8);
     });
 };
+
+// remove
+window.kody.launch();

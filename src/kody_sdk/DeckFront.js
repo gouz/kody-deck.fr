@@ -13,7 +13,6 @@ export default class DeckFront extends Deck {
   render() {
     this.generateBaseMesh("front");
     this.mainHole();
-    this.deckName();
     this.corner();
     this.codeHole();
     this.kodyHole();
@@ -72,51 +71,6 @@ export default class DeckFront extends Deck {
       config.bracket.size -
         2 * (config.print.tolerance.xy + config.print.tolerance.xy),
       config.deck.thickness
-    );
-  }
-
-  deckName() {
-    const textarea_width =
-      config.card.width -
-      2 *
-        (config.bracket.size +
-          config.bracket.size / 2 +
-          2 * config.text.block.size);
-    const textarea_height = config.bracket.size * 2;
-    this.mesh = makeHole(
-      this.mesh,
-      (this.width - textarea_width) / 2,
-      this.height -
-        config.bracket.size / 2 -
-        config.deck.thickness -
-        textarea_height,
-      this.depth - config.deck.thickness / 2,
-      textarea_width,
-      config.bracket.size * 2,
-      config.deck.thickness / 2
-    );
-
-    // text
-    const Writer = MeshWriter(window.kody.scene, { scale: 1 });
-    const text = new Writer(this.name.replace("_", " "), {
-      "letter-height": 6,
-      "letter-thickness": config.deck.thickness / 2,
-      "font-family": "comic",
-    });
-    const textMesh = text.getMesh();
-    textMesh.rotation.x = -Math.PI / 2;
-    const bb = textMesh.getBoundingInfo().boundingBox.maximumWorld;
-
-    this.mesh = addItem(
-      this.mesh,
-      textMesh,
-      (this.width - Number(bb.x)) / 2,
-      this.height -
-        config.bracket.size / 2 -
-        config.deck.thickness -
-        textarea_height +
-        (textarea_height - Number(bb.z)) / 2,
-      this.depth - config.deck.thickness / 2
     );
   }
 }

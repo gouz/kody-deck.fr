@@ -2,10 +2,9 @@ import { config } from "./config.json";
 import {
   StandardMaterial as BabylonStandardMaterial,
   Color3 as BabylonColor3,
-  MeshBuilder as BabylonMeshBuilder,
   Axis as BabylonAxis,
 } from "babylonjs";
-import { makeHole } from "./utils";
+import { makeBox, makeHole } from "./utils";
 
 export default class Deck {
   constructor(nbCards, color) {
@@ -22,14 +21,7 @@ export default class Deck {
   }
 
   generateBaseMesh(name) {
-    this.mesh = BabylonMeshBuilder.CreateBox(name, {
-      width: this.width,
-      height: this.height,
-      depth: this.depth,
-    });
-    this.mesh.position.x = this.width / 2;
-    this.mesh.position.y = this.height / 2;
-    this.mesh.position.z = this.depth / 2;
+    this.mesh = makeBox(this.width, this.height, this.depth);
     this.mesh.material = this.material;
   }
 
@@ -38,8 +30,8 @@ export default class Deck {
     this.mesh.translate(BabylonAxis.Y, -this.height / 2);
   }
 
-  mainHole(x, y, z, width, height, depth) {
-    this.mesh = makeHole(this.mesh, x, y, z, width, height, depth);
+  mainHole(width, height, depth, x, y, z) {
+    this.mesh = makeHole(this.mesh, width, height, depth, x, y, z);
   }
 
   codeHole() {
@@ -49,16 +41,16 @@ export default class Deck {
       config.code.hole.size * config.code.nb.y + config.code.nb.y;
     this.mesh = makeHole(
       this.mesh,
+      code_hole_width,
+      code_hole_height,
+      this.depth,
       (this.width - code_hole_width) / 2,
       config.deck.thickness +
         config.deck.thickness +
         config.bracket.size / 2 +
         config.bracket.size / 2 +
         config.bracket.size,
-      0,
-      code_hole_width,
-      code_hole_height,
-      this.depth
+      0
     );
   }
 }
