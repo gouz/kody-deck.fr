@@ -17,17 +17,18 @@ export default class DeckFront extends Deck {
     this.codeHole();
     this.kodyHole();
     this.position();
+    this.mesh.position.z -= config.deck.thickness;
     return this.mesh;
   }
 
   mainHole() {
     super.mainHole(
-      config.deck.thickness,
-      config.deck.thickness,
-      0,
       this.width - 2 * config.deck.thickness,
       this.height - 2 * config.deck.thickness,
-      this.depth - config.deck.thickness
+      this.depth - config.deck.thickness,
+      config.deck.thickness,
+      config.deck.thickness,
+      config.deck.thickness
     );
   }
 
@@ -35,21 +36,21 @@ export default class DeckFront extends Deck {
     let w = config.deck.corner * config.deck.thickness;
     this.mesh = makeHole(
       this.mesh,
-      w,
-      0,
-      0,
       this.width - w * 2,
       this.height,
-      this.depth - config.deck.thickness
+      this.depth - config.deck.thickness,
+      w,
+      0,
+      config.deck.thickness
     );
     this.mesh = makeHole(
       this.mesh,
-      0,
-      w,
-      0,
       this.width,
       this.height - w * 2,
-      this.depth - config.deck.thickness
+      this.depth - config.deck.thickness,
+      0,
+      w,
+      config.deck.thickness
     );
   }
 
@@ -62,15 +63,15 @@ export default class DeckFront extends Deck {
           2 * config.text.block.size);
     this.mesh = makeHole(
       this.mesh,
+      textarea_width,
+      config.bracket.size -
+        2 * (config.print.tolerance.xy + config.print.tolerance.xy),
+      config.deck.thickness,
       (this.width - textarea_width) / 2,
       2 * config.deck.thickness +
         config.bracket.size / 2 +
         config.print.tolerance.xy,
-      this.depth - config.deck.thickness,
-      textarea_width,
-      config.bracket.size -
-        2 * (config.print.tolerance.xy + config.print.tolerance.xy),
-      config.deck.thickness
+      0
     );
   }
 }
