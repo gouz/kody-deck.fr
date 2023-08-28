@@ -20,7 +20,7 @@ export default class Deck {
     this.material.diffuseColor = BabylonColor3.FromHexString(color);
   }
 
-  generateBaseMesh(name) {
+  generateBaseMesh() {
     this.mesh = makeBox(this.width, this.height, this.depth);
     this.mesh.material = this.material;
   }

@@ -5,7 +5,6 @@ import {
   ArcRotateCamera as BabylonArcRotateCamera,
   Vector3 as BabylonVector3,
   HemisphericLight as BabylonHemisphericLight,
-  AxesViewer as BabylonAxesViewer,
 } from "babylonjs";
 
 export default class Scene {
@@ -33,8 +32,6 @@ export default class Scene {
 
     engine.runRenderLoop(() => scene.render());
     window.addEventListener("resize", () => engine.resize());
-    new BabylonAxesViewer(scene, 15);
-
     return scene;
   }
 }

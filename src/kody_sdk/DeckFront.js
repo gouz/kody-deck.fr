@@ -1,7 +1,6 @@
 import Deck from "./Deck";
 import { config } from "./config.json";
-import { addItem, makeHole } from "./utils";
-import { MeshWriter } from "meshwriter";
+import { makeHole } from "./utils";
 
 export default class DeckFront extends Deck {
   constructor(nbCards, color, name) {
@@ -11,7 +10,7 @@ export default class DeckFront extends Deck {
   }
 
   render() {
-    this.generateBaseMesh("front");
+    this.generateBaseMesh();
     this.mainHole();
     this.corner();
     this.codeHole();

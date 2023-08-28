@@ -1,7 +1,6 @@
 import Deck from "./Deck";
 import { config } from "./config.json";
 import { addItem, makeBox, makeHole } from "./utils";
-import { MeshBuilder as BabylonMeshBuilder } from "babylonjs";
 
 export default class DeckBack extends Deck {
   constructor(nbCards, color) {
@@ -12,7 +11,7 @@ export default class DeckBack extends Deck {
   }
 
   render() {
-    this.generateBaseMesh("back");
+    this.generateBaseMesh();
     this.mainHole();
     this.corner();
     this.codeHole();
@@ -228,7 +227,7 @@ export default class DeckBack extends Deck {
     const kw = kody[0].length * config.text.block.size;
     const kh = kody.length * config.text.block.size;
     const kd = config.deck.thickness / 2;
-    let kb = makeBox(kw, kh, kd);
+    const kb = makeBox(kw, kh, kd);
     const kx = (this.width - kw) / 2;
     const ky =
       2 * config.deck.thickness +

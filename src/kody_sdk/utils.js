@@ -48,7 +48,10 @@ export const addItem = (mesh, item, x, y, z) => {
   return _merge(mesh, item, "add");
 };
 
-export const removeItem = (mesh, item) => {
+export const removeItem = (mesh, item, x, y, z) => {
+  item.position.x += x;
+  item.position.y += y;
+  item.position.z += z;
   return _merge(mesh, item, "sub");
 };
 
