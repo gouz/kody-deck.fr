@@ -20,9 +20,9 @@ export default class Card {
     this.generateBase();
     this.poleHoles();
     this.textAreas();
-    this.codeHoles();
-    this.cardText();
     this.kodyText();
+    this.cardText();
+    this.codeHoles();
     this.position();
     return this.mesh;
   }
@@ -138,7 +138,7 @@ export default class Card {
   }
 
   kodyText() {
-    let kody = config.kody.code;
+    let kody = config.kody.code.reverse();
     const kw = kody[0].length * config.text.block.size;
     const kh = kody.length * config.text.block.size;
     const kd = config.card.depth / 2;
