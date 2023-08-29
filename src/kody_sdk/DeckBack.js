@@ -223,7 +223,7 @@ export default class DeckBack extends Deck {
   }
 
   kodyText() {
-    const kody = config.kody.code.reverse();
+    const kody = [...config.kody.code].reverse();
     const kw = kody[0].length * config.text.block.size;
     const kh = kody.length * config.text.block.size;
     const kd = config.deck.thickness / 2;

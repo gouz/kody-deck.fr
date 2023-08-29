@@ -138,7 +138,7 @@ export default class Card {
   }
 
   kodyText() {
-    let kody = config.kody.code.reverse();
+    let kody = [...config.kody.code].reverse();
     const kw = kody[0].length * config.text.block.size;
     const kh = kody.length * config.text.block.size;
     const kd = config.card.depth / 2;
