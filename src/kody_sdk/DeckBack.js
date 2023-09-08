@@ -233,7 +233,7 @@ export default class DeckBack extends Deck {
       2 * config.deck.thickness +
       config.bracket.size / 2 +
       config.print.tolerance.xy +
-      config.text.block.size / 2;
+      config.text.block.size;
     const kz = this.depth - config.deck.thickness;
     this.mesh = addItem(this.mesh, kb, kx, ky, kz);
     let _y = 0;
