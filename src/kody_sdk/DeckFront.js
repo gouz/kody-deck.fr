@@ -63,8 +63,7 @@ export default class DeckFront extends Deck {
     this.mesh = makeHole(
       this.mesh,
       textarea_width,
-      config.bracket.size -
-        2 * (config.print.tolerance.xy + config.print.tolerance.xy),
+      config.bracket.size,
       config.deck.thickness,
       (this.width - textarea_width) / 2,
       2 * config.deck.thickness +

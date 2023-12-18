@@ -44,12 +44,12 @@ export default class Deck {
       code_hole_width,
       code_hole_height,
       this.depth,
-      (this.width - code_hole_width) / 2,
-      config.deck.thickness +
-        config.deck.thickness +
+      (this.width - code_hole_width - config.text.block.size) / 2,
+      config.deck.thickness * 2 +
         config.bracket.size / 2 +
         config.bracket.size / 2 +
-        config.bracket.size,
+        config.bracket.size -
+        config.text.block.size,
       0
     );
   }

@@ -160,7 +160,7 @@ export const CreateSTL = (
   }
 
   if (!binary && exportIndividualMeshes) {
-    data += "solid " + mesh.name + "\r\n";
+    data += `solid ${mesh.name}\r\n`;
   }
   if (!doNotBakeTransform && mesh instanceof BabylonMesh) {
     mesh.bakeCurrentTransformIntoVertices();
@@ -188,7 +188,7 @@ export const CreateSTL = (
     }
   }
   if (!binary && exportIndividualMeshes) {
-    data += `endsolid ${name}\r\n`;
+    data += `endsolid ${mesh.name}\r\n`;
   }
 
   if (!binary && !exportIndividualMeshes) {
